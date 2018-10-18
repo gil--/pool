@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
 import { Button, FormField, TextInputField, Textarea, Pane } from 'evergreen-ui';
-import { Formik, Field, ErrorMessage } from 'formik';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+
+const FormSchema = Yup.object().shape({
+    email: Yup.string()
+        .email('Invalid email address')
+        .required('Email is Required'),
+    name: Yup.string()
+        .required('Name is Required'),
+    location: Yup.string()
+        .required('Location is Required'),
+    description: Yup.string()
+        .required('Description is Required'),
+})
 
 class Login extends Component {
     render() {
         return <Pane margin={20} clearfix display="flex" alignItems="center">
             <Pane border width={'50%'} padding={20}>
-              <Formik
+                <Formik
                     initialValues={{ email: '', password: '' }}
-                    validate={values => {
-                        let errors = {};
-                        errors.email = 'Invalid email address';
-                        return errors;
-                    }}
+                    validationSchema={FormSchema}
                     onSubmit={(values, { setSubmitting }) => {
                     alert('submitted!');
                     setSubmitting(false);
@@ -55,8 +64,16 @@ class Login extends Component {
                         validationMessage={errors.location}
                     />
                     <FormField label="Description">
-                      <Textarea label="Description" name="description" placeholder="" />
-                      <ErrorMessage name="description" component="div" />
+                        <Textarea
+                            label="Description"
+                            name="description"
+                            placeholder=""
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.description}
+                            isInvalid={errors.description && true}
+                            validationMessage={errors.description}
+                        />
                     </FormField>
                     <Button type="submit" marginRight={16} appearance="primary" height={56} disabled={isSubmitting}>
                       Create Pool
