@@ -12,8 +12,12 @@ class App extends Component {
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
           </header>
-          <Route exact path="/" component={Login} />
+          <Route exact path="/login" component={Login} />
           <Route exact path="/profile" component={Profile} />
+          <ul>
+            <li><Link to={`/profile`}>Profile Page</Link></li>
+            <li><Link to={`/login`}>Login Page</Link></li>
+          </ul>
         </div>
       </Router>
   }
