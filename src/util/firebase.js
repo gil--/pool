@@ -2,14 +2,27 @@ import * as firebase from 'firebase';
 import Rebase from 're-base';
 require('firebase/firestore');
 
-const app = firebase.initializeApp({
-    apiKey: process.env.FIREBASE_apiKey,
-    authDomain: process.env.FIREBASE_authDomain,
-    databaseURL: process.env.FIREBASE_databaseURL,
-    projectId: process.env.FIREBASE_projectId,
-    storageBucket: process.env.FIREBASE_storageBucket,
-    messagingSenderId: process.env.FIREBASE_messagingSenderId,
-});
+const {
+    FIREBASE_apiKey,
+    FIREBASE_authDomain,
+    FIREBASE_databaseURL,
+    FIREBASE_projectId,
+    FIREBASE_storageBucket,
+    FIREBASE_messagingSenderId
+} = process.env;
+
+const config = {
+  apiKey: `${FIREBASE_apiKey}`,
+  authDomain: `${FIREBASE_authDomain}`,
+  databaseURL: `${FIREBASE_databaseURL}`,
+  projectId: `${FIREBASE_projectId}`,
+  storageBucket: `${FIREBASE_storageBucket}`,
+  messagingSenderId: FIREBASE_messagingSenderId,
+};
+
+const app = firebase.initializeApp();
+
+console.log(config);
 
 let firestore = app.firestore();
 const settings = { timestampsInSnapshots: true };
